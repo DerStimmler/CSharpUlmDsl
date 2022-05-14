@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UlmDslClient", "UlmDslClient\UlmDslClient.csproj", "{A5C10F81-F756-4AFC-BEAE-4D36C7E360B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UlmDslClient.Tests", "UlmDslClient.Tests\UlmDslClient.Tests.csproj", "{A78C41A1-FA9B-4102-A80D-18351DC0F794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{A5C10F81-F756-4AFC-BEAE-4D36C7E360B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5C10F81-F756-4AFC-BEAE-4D36C7E360B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5C10F81-F756-4AFC-BEAE-4D36C7E360B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A78C41A1-FA9B-4102-A80D-18351DC0F794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A78C41A1-FA9B-4102-A80D-18351DC0F794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A78C41A1-FA9B-4102-A80D-18351DC0F794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A78C41A1-FA9B-4102-A80D-18351DC0F794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
