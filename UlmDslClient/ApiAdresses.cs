@@ -2,7 +2,7 @@ namespace UlmDslClient;
 
 internal static class ApiAdresses
 {
-  internal static readonly Uri BaseAddress = new("https://ulm-dsl.de");
-  public static string InboxApi(string name) => $"/inbox-api.php?name={name}";
-  public static string MailApi(string name, int id) => $"/mail-api.php?name={name}&id={id}";
+  private static readonly Uri BaseAddress = new("https://ulm-dsl.de");
+  internal static Uri InboxApi(string name) => new($"{BaseAddress}/inbox-api.php?name={name}");
+  internal static Uri MailApi(string name, int id) => new($"{BaseAddress}/mail-api.php?name={name}&id={id}");
 }

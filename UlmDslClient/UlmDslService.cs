@@ -1,52 +1,25 @@
-using System.Xml.Serialization;
-using UlmDslClient.DTOs;
+using System.ServiceModel.Syndication;
+using System.Xml.Linq;
 
 namespace UlmDslClient;
 
-internal class UlmDslService
+internal static class UlmDslService
 {
-  private readonly HttpClient _httpClient;
-
-  public UlmDslService(HttpClient httpClient)
+  internal static SyndicationFeed FetchMailFeed(string name, int id)
   {
-    httpClient.BaseAddress = ApiAdresses.BaseAddress;
+    var uri = ApiAdresses.MailApi(name, id).AbsoluteUri;
 
-    _httpClient = httpClient;
+    var document = XDocument.Load(uri);
+
+    return SyndicationFeed.Load(document.CreateReader());
   }
 
-  internal async Task<UlmDslMailDto> FetchMailAsync(string name, int id)
+  internal static SyndicationFeed FetchInboxFeed(string name)
   {
-    var response = await _httpClient.GetAsync(ApiAdresses.MailApi(name, id));
+    var uri = ApiAdresses.InboxApi(name).AbsoluteUri;
 
-    var content = await response.Content.ReadAsStringAsync();
+    var document = XDocument.Load(uri);
 
-    if (!response.IsSuccessStatusCode)
-      throw new InvalidOperationException(content);
-
-    var stringReader = new StringReader(content);
-
-    var xmlSerializer = new XmlSerializer(typeof(UlmDslMailDto));
-
-    var dto = xmlSerializer.Deserialize(stringReader);
-
-    return (UlmDslMailDto) dto;
-  }
-
-  internal async Task<UlmDslInboxDto> FetchInboxAsync(string name)
-  {
-    var response = await _httpClient.GetAsync(ApiAdresses.InboxApi(name));
-
-    var content = await response.Content.ReadAsStringAsync();
-
-    if (!response.IsSuccessStatusCode)
-      throw new InvalidOperationException(content);
-
-    var stringReader = new StringReader(content);
-
-    var xmlSerializer = new XmlSerializer(typeof(UlmDslInboxDto));
-
-    var dto = xmlSerializer.Deserialize(stringReader);
-
-    return (UlmDslInboxDto) dto;
+    return SyndicationFeed.Load(document.CreateReader());
   }
 }

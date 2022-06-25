@@ -1,4 +1,3 @@
-using System.Net.Http;
 using Xunit;
 
 namespace UlmDslClient.Tests;
@@ -6,32 +5,20 @@ namespace UlmDslClient.Tests;
 public class UlmDslClientTest
 {
   [Fact]
-  public async void GetMailInfos()
+  public void GetMailInfos()
   {
-    var httpClient = new HttpClient();
-
-    var ulmDslClient = new UlmDslClient(httpClient);
-
-    var x = await ulmDslClient.GetMailInfosAsync("stimmler123");
+    var x = UlmDslClient.GetMailInfos("max.mustermann");
   }
 
   [Fact]
-  public async void GetMailById()
+  public void GetMailById()
   {
-    var httpClient = new HttpClient();
-
-    var ulmDslClient = new UlmDslClient(httpClient);
-
-    var x = await ulmDslClient.GetMailByIdAsync("stimmler123", 7315);
+    var x = UlmDslClient.GetMailById("max.mustermann", 7315);
   }
 
   [Fact]
-  public async void GetMails()
+  public void GetMails()
   {
-    var httpClient = new HttpClient();
-
-    var ulmDslClient = new UlmDslClient(httpClient);
-
-    var x = await ulmDslClient.GetMailsAsync("stimmler123");
+    var x = UlmDslClient.GetMails("max.mustermann");
   }
 }
