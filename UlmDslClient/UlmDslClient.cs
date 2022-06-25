@@ -5,17 +5,29 @@ using UlmDslClient.Utils;
 
 namespace UlmDslClient;
 
-public static class UlmDslClient
+public class UlmDslClient
 {
-  public static IReadOnlyList<UlmDslMail> GetMails(string name)
+  private readonly UlmDslService _service;
+
+  public UlmDslClient(HttpClient httpClient)
   {
+    _service = new UlmDslService(httpClient);
+  }
+
+  public IReadOnlyList<UlmDslMail> GetMails(string name) => GetMailsAsync(name).Result;
+
+  public async Task<IReadOnlyList<UlmDslMail>> GetMailsAsync(string name)
+  {
+    if (string.IsNullOrWhiteSpace(name))
+      throw new ArgumentException("Invalid name");
+
     var mails = new List<UlmDslMail>();
 
-    var mailInfos = GetMailInfos(name);
+    var mailInfos = await GetInboxAsync(name);
 
     foreach (var mailInfo in mailInfos)
     {
-      var feed = UlmDslService.FetchMailFeed(name, mailInfo.Id);
+      var feed = await _service.FetchMailFeedAsync(name, mailInfo.Id);
 
       var mail = feed.Items.First();
 
@@ -34,16 +46,21 @@ public static class UlmDslClient
     return mails.AsReadOnly();
   }
 
-  public static UlmDslMail GetMailById(string name, int id)
+  public UlmDslMail? GetMailById(string name, int id) => GetMailByIdAsync(name, id).Result;
+
+  public async Task<UlmDslMail?> GetMailByIdAsync(string name, int id)
   {
-    var mailInfos = GetMailInfos(name);
+    if (string.IsNullOrWhiteSpace(name))
+      throw new ArgumentException("Invalid name");
+
+    var mailInfos = await GetInboxAsync(name);
 
     var mailInfo = mailInfos.SingleOrDefault(mail => mail.Id == id);
 
     if (mailInfo is null)
-      throw new ArgumentException($"There is no mail with id {id}");
+      return null;
 
-    var feed = UlmDslService.FetchMailFeed(name, id);
+    var feed = await _service.FetchMailFeedAsync(name, id);
 
     var mail = feed.Items.First();
 
@@ -59,11 +76,17 @@ public static class UlmDslClient
     };
   }
 
-  public static IReadOnlyList<UlmDslMailInfo> GetMailInfos(string name)
+  public IReadOnlyList<UlmDslMailInfo> GetInbox(string name) => GetInboxAsync(name).Result;
+
+  public async Task<IReadOnlyList<UlmDslMailInfo>> GetInboxAsync(string name)
   {
-    var feed = UlmDslService.FetchInboxFeed(name);
+    if (string.IsNullOrWhiteSpace(name))
+      throw new ArgumentException("Invalid name");
+
+    var feed = await _service.FetchInboxFeedAsync(name);
 
     return feed.Items
+      .Where(item => !string.IsNullOrWhiteSpace(item.Summary.Text))
       .Select(item => new UlmDslMailInfo
       {
         Id = Convert.ToInt32(item.Id),
