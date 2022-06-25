@@ -5,10 +5,25 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>default</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>UlmDslClient</Title>
+        <Authors>Stimmler</Authors>
+        <Description>C# client for using the temp mail service ulm-dsl.</Description>
+        <Copyright>Copyright (c) Stimmler 2022</Copyright>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/DerStimmler/UlmDslClient</PackageProjectUrl>
+        <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/DerStimmler/UlmDslClient</RepositoryUrl>
+        <PackageTags>C#, TempMail, UlmDsl</PackageTags>
+        <Company>Stimmler</Company>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
     </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 </Project>
