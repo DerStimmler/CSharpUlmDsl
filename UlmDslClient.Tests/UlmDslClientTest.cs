@@ -1,24 +1,125 @@
+using System;
+using System.Net.Http;
+using FluentAssertions;
+using RichardSzalay.MockHttp;
 using Xunit;
 
 namespace UlmDslClient.Tests;
 
 public class UlmDslClientTest
 {
-  [Fact]
-  public void GetMailInfos()
+  private static HttpClient GetMockedHttpClient()
   {
-    var x = UlmDslClient.GetMailInfos("max.mustermann");
+    var mockHttp = new MockHttpMessageHandler();
+
+    mockHttp.When("https://ulm-dsl.de/inbox-api.php?name=max.mustermann").Respond("text/xml", ResponseMocks.InboxXml);
+    mockHttp.When("https://ulm-dsl.de/inbox-api.php?name=stimmler").Respond("text/xml", ResponseMocks.EmptyInboxXml);
+    mockHttp.When("https://ulm-dsl.de/mail-api.php?name=max.mustermann&id=5267")
+      .Respond("text/xml", ResponseMocks.SingleMail5267Xml);
+    mockHttp.When("https://ulm-dsl.de/mail-api.php?name=max.mustermann&id=4305")
+      .Respond("text/xml", ResponseMocks.SingleMail4305Xml);
+    mockHttp.When("https://ulm-dsl.de/mail-api.php?name=max.mustermann&id=4")
+      .Respond("text/xml", ResponseMocks.InvalidId4);
+
+    return new HttpClient(mockHttp);
+  }
+
+  [Fact]
+  public async void GetInboxAsync()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var inbox = await client.GetInboxAsync("max.mustermann");
+
+    inbox.Should().HaveCount(2);
+
+    inbox.Should().BeEquivalentTo(ResponseMocks.Inbox);
+  }
+
+  [Fact]
+  public void GetInbox()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var inbox = client.GetInbox("max.mustermann");
+
+    inbox.Should().HaveCount(2);
+
+    inbox.Should().BeEquivalentTo(ResponseMocks.Inbox);
+  }
+
+  [Fact]
+  public async void EmptyInbox()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var inbox = await client.GetInboxAsync("stimmler");
+
+    inbox.Should().HaveCount(0);
+  }
+
+  [Fact]
+  public async void GetMailByIdAsync()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var mail = await client.GetMailByIdAsync("max.mustermann", 5267);
+
+    mail.Should().Be(ResponseMocks.SingleMail5267);
   }
 
   [Fact]
   public void GetMailById()
   {
-    var x = UlmDslClient.GetMailById("max.mustermann", 7315);
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var mail = client.GetMailById("max.mustermann", 5267);
+
+    mail.Should().Be(ResponseMocks.SingleMail5267);
+  }
+
+  [Fact]
+  public async void GetMailsAsync()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var inbox = await client.GetMailsAsync("max.mustermann");
+
+    inbox[0].Should().Be(ResponseMocks.SingleMail5267);
+    inbox[1].Should().Be(ResponseMocks.SingleMail43056);
   }
 
   [Fact]
   public void GetMails()
   {
-    var x = UlmDslClient.GetMails("max.mustermann");
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var inbox = client.GetMails("max.mustermann");
+
+    inbox[0].Should().Be(ResponseMocks.SingleMail5267);
+    inbox[1].Should().Be(ResponseMocks.SingleMail43056);
+  }
+
+  [Fact]
+  public async void InvalidId()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var result = await client.GetMailByIdAsync("max.mustermann", 4);
+
+    result.Should().BeNull();
+  }
+
+  [Fact]
+  public async void InvalidName()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var result = async () => { await client.GetMailByIdAsync(string.Empty, 4); };
+    await result.Should().ThrowAsync<ArgumentException>();
+    var result2 = async () => { await client.GetInboxAsync(string.Empty); };
+    await result2.Should().ThrowAsync<ArgumentException>();
+    var result3 = async () => { await client.GetMailsAsync(string.Empty); };
+    await result3.Should().ThrowAsync<ArgumentException>();
   }
 }
