@@ -15,7 +15,7 @@ public class UlmDslClient
   }
 
   /// <summary>
-  ///   Get all mails for a given inbox name.
+  ///   Get all emails with all available information for a given inbox name.
   /// </summary>
   /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
   /// <returns>List of emails with all available information.</returns>
@@ -23,7 +23,7 @@ public class UlmDslClient
   public IReadOnlyList<UlmDslMail> GetMails(string name) => GetMailsAsync(name).Result;
 
   /// <summary>
-  ///   Get all emails for a given inbox name asynchronously.
+  ///   Get all emails with all available information for a given inbox name asynchronously.
   /// </summary>
   /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
   /// <returns>List of emails with all available information.</returns>
@@ -59,7 +59,7 @@ public class UlmDslClient
   }
 
   /// <summary>
-  ///   Gets a specific email based on inbox name and email identifier.
+  ///   Gets a specific email with all available information based on inbox name and email identifier.
   /// </summary>
   /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
   /// <param name="id">identifier of email</param>
@@ -68,7 +68,7 @@ public class UlmDslClient
   public UlmDslMail? GetMailById(string name, int id) => GetMailByIdAsync(name, id).Result;
 
   /// <summary>
-  ///   Gets a specific email based on inbox name and email identifier asynchronously.
+  ///   Gets a specific email with all available information based on inbox name and email identifier asynchronously.
   /// </summary>
   /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
   /// <param name="id">identifier of email</param>
@@ -103,7 +103,7 @@ public class UlmDslClient
   }
 
   /// <summary>
-  ///   Get basic info of all emails for a given inbox name.
+  ///   Get basic information except body of all emails for a given inbox name.
   /// </summary>
   /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
   /// <returns>List of emails with basic information except body.</returns>
@@ -111,7 +111,7 @@ public class UlmDslClient
   public IReadOnlyList<UlmDslMailBasicInfo> GetInbox(string name) => GetInboxAsync(name).Result;
 
   /// <summary>
-  ///   Get basic info of all emails for a given inbox name asynchronously.
+  ///   Get basic information except body of all emails for a given inbox name asynchronously.
   /// </summary>
   /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
   /// <returns>List of emails with basic information except body.</returns>
