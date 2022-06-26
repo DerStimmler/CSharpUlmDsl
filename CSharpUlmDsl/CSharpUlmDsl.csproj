@@ -16,6 +16,8 @@
     <RepositoryUrl>https://github.com/DerStimmler/CSharpUlmDsl</RepositoryUrl>
     <PackageTags>C#, TempMail, UlmDsl</PackageTags>
     <Company>Stimmler</Company>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageVersion>1.0.1</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
