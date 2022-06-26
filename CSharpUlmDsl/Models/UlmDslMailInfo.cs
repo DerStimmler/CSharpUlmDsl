@@ -1,4 +1,4 @@
-namespace UlmDslClient.Models;
+namespace CSharpUlmDsl.Models;
 
 public record UlmDslMailInfo
 {

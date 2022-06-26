@@ -1,3 +1,3 @@
-# UlmDslClient
+# CSharpUlmDsl
 
-C# client for using the temp mail service ulm-dsl.
+C# client for fetching emails from the temp mail service ulm-dsl.

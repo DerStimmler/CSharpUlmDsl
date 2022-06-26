@@ -1,9 +1,9 @@
 ﻿using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
-using UlmDslClient.Models;
-using UlmDslClient.Utils;
+using CSharpUlmDsl.Models;
+using CSharpUlmDsl.Utils;
 
-namespace UlmDslClient;
+namespace CSharpUlmDsl;
 
 public class UlmDslClient
 {

@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UlmDslClient", "UlmDslClient\UlmDslClient.csproj", "{A5C10F81-F756-4AFC-BEAE-4D36C7E360B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpUlmDsl", "CSharpUlmDsl\CSharpUlmDsl.csproj", "{A5C10F81-F756-4AFC-BEAE-4D36C7E360B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UlmDslClient.Tests", "UlmDslClient.Tests\UlmDslClient.Tests.csproj", "{A78C41A1-FA9B-4102-A80D-18351DC0F794}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpUlmDsl.Tests", "CSharpUlmDsl.Tests\CSharpUlmDsl.Tests.csproj", "{A78C41A1-FA9B-4102-A80D-18351DC0F794}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

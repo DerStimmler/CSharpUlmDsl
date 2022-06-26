@@ -4,7 +4,7 @@ using FluentAssertions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace UlmDslClient.Tests;
+namespace CSharpUlmDsl.Tests;
 
 public class UlmDslClientTest
 {

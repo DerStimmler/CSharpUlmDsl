@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
 
-namespace UlmDslClient.Utils;
+namespace CSharpUlmDsl.Utils;
 
 internal static class StringUtils
 {

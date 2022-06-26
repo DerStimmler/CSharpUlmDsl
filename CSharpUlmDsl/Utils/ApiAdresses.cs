@@ -1,4 +1,4 @@
-namespace UlmDslClient;
+namespace CSharpUlmDsl.Utils;
 
 internal static class ApiAdresses
 {

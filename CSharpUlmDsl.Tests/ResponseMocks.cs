@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using UlmDslClient.Models;
+using CSharpUlmDsl.Models;
 
-namespace UlmDslClient.Tests;
+namespace CSharpUlmDsl.Tests;
 
 public static class ResponseMocks
 {
@@ -106,7 +106,6 @@ udate => 1655740217
   </entry>
   </feed>";
 
-
   public const string SingleMail5267Xml = @"<?xml version='1.0' encoding='utf-8'?>
 <feed xmlns=""http://www.w3.org/2005/Atom"">
   <author>
@@ -133,21 +132,6 @@ udate => 1655740217
   </entry>
   </feed>";
 
-  public static UlmDslMail SingleMail5267 = new()
-  {
-    Id = 5267,
-    Date = new DateTimeOffset(2022, 6, 22, 14, 15, 43, TimeSpan.Zero),
-    Link = new Uri("https://ulm-dsl.de/details.php?search=max.mustermann&nr=5267"),
-    Subject = "Reihenendhaus Hilden: Wunschpreis noch nicht geprüft",
-    Recipient = new UlmDslMailRecipient { DisplayName = "Herr Mustermann", Email = "max.mustermann@ulm-dsl.de" },
-    Sender = new UlmDslMailSender
-    {
-      DisplayName = "Fabian Wedeking | Homeday | Hilden",
-      Email = "kontakt@homeday.de"
-    },
-    Body = @"<html><body>Testtext</body></html>"
-  };
-
   public const string SingleMail4305Xml = @"<?xml version='1.0' encoding='utf-8'?>
 <feed xmlns=""http://www.w3.org/2005/Atom"">
   <author>
@@ -170,23 +154,6 @@ udate => 1655740217
   </entry>
   </feed>";
 
-  public static UlmDslMail SingleMail43056 = new()
-  {
-    Id = 4305,
-    Date = new DateTimeOffset(2022, 6, 20, 15, 50, 8, TimeSpan.Zero),
-    Link = new Uri("https://ulm-dsl.de/details.php?search=max.mustermann&nr=4305"),
-    Subject = "AW: Lindenstraße 12C: Wie viel müsste man Ihnen bieten, damit Sie verkaufen?",
-    Recipient = new UlmDslMailRecipient { DisplayName = "Herr Mustermann", Email = "max.mustermann@ulm-dsl.de" },
-    Sender = new UlmDslMailSender
-    {
-      DisplayName = "Fabian Wedeking | Homeday | Hilden",
-      Email = "kontakt@homeday.de"
-    },
-    Body = @"Testtext2"
-  };
-
-  public static List<UlmDslMailInfo> Inbox = new() { SingleMail5267, SingleMail43056 };
-
   public const string InvalidId4 = @"<?xml version='1.0' encoding='utf-8'?>
 <feed xmlns=""http://www.w3.org/2005/Atom"">
   <author> <name>max.mustermann</name> </author>
@@ -203,4 +170,36 @@ udate => 1655740217
     Bitte versuchen Sie es in wenigen Minuten noch einmal.</content>
   </entry>
   </feed>";
+
+  public static UlmDslMail SingleMail5267 = new()
+  {
+    Id = 5267,
+    Date = new DateTimeOffset(2022, 6, 22, 14, 15, 43, TimeSpan.Zero),
+    Link = new Uri("https://ulm-dsl.de/details.php?search=max.mustermann&nr=5267"),
+    Subject = "Reihenendhaus Hilden: Wunschpreis noch nicht geprüft",
+    Recipient = new UlmDslMailRecipient { DisplayName = "Herr Mustermann", Email = "max.mustermann@ulm-dsl.de" },
+    Sender = new UlmDslMailSender
+    {
+      DisplayName = "Fabian Wedeking | Homeday | Hilden",
+      Email = "kontakt@homeday.de"
+    },
+    Body = @"<html><body>Testtext</body></html>"
+  };
+
+  public static UlmDslMail SingleMail43056 = new()
+  {
+    Id = 4305,
+    Date = new DateTimeOffset(2022, 6, 20, 15, 50, 8, TimeSpan.Zero),
+    Link = new Uri("https://ulm-dsl.de/details.php?search=max.mustermann&nr=4305"),
+    Subject = "AW: Lindenstraße 12C: Wie viel müsste man Ihnen bieten, damit Sie verkaufen?",
+    Recipient = new UlmDslMailRecipient { DisplayName = "Herr Mustermann", Email = "max.mustermann@ulm-dsl.de" },
+    Sender = new UlmDslMailSender
+    {
+      DisplayName = "Fabian Wedeking | Homeday | Hilden",
+      Email = "kontakt@homeday.de"
+    },
+    Body = @"Testtext2"
+  };
+
+  public static List<UlmDslMailInfo> Inbox = new() { SingleMail5267, SingleMail43056 };
 }

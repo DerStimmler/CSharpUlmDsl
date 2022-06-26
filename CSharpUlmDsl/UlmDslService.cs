@@ -1,8 +1,9 @@
 using System.ServiceModel.Syndication;
 using System.Xml;
 using System.Xml.Linq;
+using CSharpUlmDsl.Utils;
 
-namespace UlmDslClient;
+namespace CSharpUlmDsl;
 
 internal class UlmDslService
 {
