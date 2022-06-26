@@ -28,7 +28,6 @@ public class UlmDslClientTest
   public async void GetInboxAsync()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-
     var inbox = await client.GetInboxAsync("max.mustermann");
 
     inbox.Should().HaveCount(2);
@@ -40,7 +39,6 @@ public class UlmDslClientTest
   public void GetInbox()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-
     var inbox = client.GetInbox("max.mustermann");
 
     inbox.Should().HaveCount(2);
@@ -52,7 +50,6 @@ public class UlmDslClientTest
   public async void EmptyInbox()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-
     var inbox = await client.GetInboxAsync("stimmler");
 
     inbox.Should().HaveCount(0);
@@ -62,7 +59,6 @@ public class UlmDslClientTest
   public async void GetMailByIdAsync()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-
     var mail = await client.GetMailByIdAsync("max.mustermann", 5267);
 
     mail.Should().Be(ResponseMocks.SingleMail5267);
@@ -72,7 +68,6 @@ public class UlmDslClientTest
   public void GetMailById()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-
     var mail = client.GetMailById("max.mustermann", 5267);
 
     mail.Should().Be(ResponseMocks.SingleMail5267);
@@ -82,7 +77,6 @@ public class UlmDslClientTest
   public async void GetMailsAsync()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-
     var inbox = await client.GetMailsAsync("max.mustermann");
 
     inbox[0].Should().Be(ResponseMocks.SingleMail5267);
@@ -93,7 +87,6 @@ public class UlmDslClientTest
   public void GetMails()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-
     var inbox = client.GetMails("max.mustermann");
 
     inbox[0].Should().Be(ResponseMocks.SingleMail5267);
@@ -104,7 +97,6 @@ public class UlmDslClientTest
   public async void InvalidId()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-
     var result = await client.GetMailByIdAsync("max.mustermann", 4);
 
     result.Should().BeNull();

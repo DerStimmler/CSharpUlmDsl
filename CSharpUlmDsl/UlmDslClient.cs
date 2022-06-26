@@ -14,8 +14,20 @@ public class UlmDslClient
     _service = new UlmDslService(httpClient);
   }
 
+  /// <summary>
+  ///   Get all mails for a given inbox name.
+  /// </summary>
+  /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
+  /// <returns>List of emails with all available information.</returns>
+  /// <exception cref="ArgumentException">In case the inbox name is invalid.</exception>
   public IReadOnlyList<UlmDslMail> GetMails(string name) => GetMailsAsync(name).Result;
 
+  /// <summary>
+  ///   Get all emails for a given inbox name asynchronously.
+  /// </summary>
+  /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
+  /// <returns>List of emails with all available information.</returns>
+  /// <exception cref="ArgumentException">In case the inbox name is invalid.</exception>
   public async Task<IReadOnlyList<UlmDslMail>> GetMailsAsync(string name)
   {
     if (string.IsNullOrWhiteSpace(name))
@@ -46,8 +58,22 @@ public class UlmDslClient
     return mails.AsReadOnly();
   }
 
+  /// <summary>
+  ///   Gets a specific email based on inbox name and email identifier.
+  /// </summary>
+  /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
+  /// <param name="id">identifier of email</param>
+  /// <returns>Specific email with all available information.</returns>
+  /// <exception cref="ArgumentException">In case the inbox name is invalid.</exception>
   public UlmDslMail? GetMailById(string name, int id) => GetMailByIdAsync(name, id).Result;
 
+  /// <summary>
+  ///   Gets a specific email based on inbox name and email identifier asynchronously.
+  /// </summary>
+  /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
+  /// <param name="id">identifier of email</param>
+  /// <returns>Specific email with all available information.</returns>
+  /// <exception cref="ArgumentException">In case the inbox name is invalid.</exception>
   public async Task<UlmDslMail?> GetMailByIdAsync(string name, int id)
   {
     if (string.IsNullOrWhiteSpace(name))
@@ -76,9 +102,21 @@ public class UlmDslClient
     };
   }
 
-  public IReadOnlyList<UlmDslMailInfo> GetInbox(string name) => GetInboxAsync(name).Result;
+  /// <summary>
+  ///   Get basic info of all emails for a given inbox name.
+  /// </summary>
+  /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
+  /// <returns>List of emails with basic information except body.</returns>
+  /// <exception cref="ArgumentException">In case the inbox name is invalid.</exception>
+  public IReadOnlyList<UlmDslMailBasicInfo> GetInbox(string name) => GetInboxAsync(name).Result;
 
-  public async Task<IReadOnlyList<UlmDslMailInfo>> GetInboxAsync(string name)
+  /// <summary>
+  ///   Get basic info of all emails for a given inbox name asynchronously.
+  /// </summary>
+  /// <param name="name">inbox name (everything before @ulm-dsl.de)</param>
+  /// <returns>List of emails with basic information except body.</returns>
+  /// <exception cref="ArgumentException">In case the inbox name is invalid.</exception>
+  public async Task<IReadOnlyList<UlmDslMailBasicInfo>> GetInboxAsync(string name)
   {
     if (string.IsNullOrWhiteSpace(name))
       throw new ArgumentException("Invalid name");
@@ -87,7 +125,7 @@ public class UlmDslClient
 
     return feed.Items
       .Where(item => !string.IsNullOrWhiteSpace(item.Summary.Text))
-      .Select(item => new UlmDslMailInfo
+      .Select(item => new UlmDslMailBasicInfo
       {
         Id = Convert.ToInt32(item.Id),
         Link = item.Links.First().Uri,

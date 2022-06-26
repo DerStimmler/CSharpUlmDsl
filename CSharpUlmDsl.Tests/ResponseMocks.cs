@@ -201,5 +201,5 @@ udate => 1655740217
     Body = @"Testtext2"
   };
 
-  public static List<UlmDslMailInfo> Inbox = new() { SingleMail5267, SingleMail43056 };
+  public static List<UlmDslMailBasicInfo> Inbox = new() { SingleMail5267, SingleMail43056 };
 }
