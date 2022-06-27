@@ -3,11 +3,11 @@
 [![NuGet downloads](https://img.shields.io/nuget/v/csharpulmdsl.svg)](https://www.nuget.org/packages/CSharpUlmDsl/)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DerStimmler/CSharpUlmDsl/blob/master/LICENSE.md)
 
-C# client for fetching emails from the temp mail service ulm-dsl.
+C# client for fetching emails from the temp mail service [ulm-dsl](https://ulm-dsl.de/).
 
 ## Installation
 
-Available on [NuGet](https://www.nuget.org/packages/CSharpUlmDsl/)
+Available on [NuGet](https://www.nuget.org/packages/CSharpUlmDsl/).
 
 ```bash
 dotnet add package CSharpUlmDsl
@@ -20,6 +20,8 @@ PM> Install-Package CSharpUlmDsl
 ```
 
 ## Usage
+
+The following examples use the email address `max.mustermann@ulm-dsl.de`. Just replace the inbox name `max.mustermann` to match your address.
 
 ### Initialization
 
