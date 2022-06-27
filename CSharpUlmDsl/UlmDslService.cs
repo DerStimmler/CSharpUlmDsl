@@ -20,21 +20,21 @@ internal class UlmDslService
   {
     var uri = ApiAdresses.MailApi(name, id);
 
-    return await FetchFeedAsync(uri);
+    return await FetchFeedAsync(uri).ConfigureAwait(false);
   }
 
   internal async Task<SyndicationFeed> FetchInboxFeedAsync(string name)
   {
     var uri = ApiAdresses.InboxApi(name);
 
-    return await FetchFeedAsync(uri);
+    return await FetchFeedAsync(uri).ConfigureAwait(false);
   }
 
   private async Task<SyndicationFeed> FetchFeedAsync(string uri)
   {
-    var response = await _httpClient.GetAsync(uri);
+    var response = await _httpClient.GetAsync(uri).ConfigureAwait(false);
 
-    var content = await response.Content.ReadAsStringAsync();
+    var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
     if (!response.IsSuccessStatusCode)
       throw new InvalidOperationException(content);

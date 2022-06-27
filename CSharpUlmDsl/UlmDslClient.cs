@@ -5,10 +5,17 @@ using CSharpUlmDsl.Utils;
 
 namespace CSharpUlmDsl;
 
+/// <summary>
+///   Client for fetching emails from the temp mail service ulm-dsl.
+/// </summary>
 public class UlmDslClient
 {
   private readonly UlmDslService _service;
 
+  /// <summary>
+  ///   Instantiate client for fetching emails from the temp mail service ulm-dsl.
+  /// </summary>
+  /// <param name="httpClient"></param>
   public UlmDslClient(HttpClient httpClient)
   {
     _service = new UlmDslService(httpClient);
@@ -35,11 +42,11 @@ public class UlmDslClient
 
     var mails = new List<UlmDslMail>();
 
-    var mailInfos = await GetInboxAsync(name);
+    var mailInfos = await GetInboxAsync(name).ConfigureAwait(false);
 
     foreach (var mailInfo in mailInfos)
     {
-      var feed = await _service.FetchMailFeedAsync(name, mailInfo.Id);
+      var feed = await _service.FetchMailFeedAsync(name, mailInfo.Id).ConfigureAwait(false);
 
       var mail = feed.Items.First();
 
@@ -79,16 +86,19 @@ public class UlmDslClient
     if (string.IsNullOrWhiteSpace(name))
       throw new ArgumentException("Invalid name");
 
-    var mailInfos = await GetInboxAsync(name);
+    var mailInfos = await GetInboxAsync(name).ConfigureAwait(false);
 
     var mailInfo = mailInfos.SingleOrDefault(mail => mail.Id == id);
 
     if (mailInfo is null)
       return null;
 
-    var feed = await _service.FetchMailFeedAsync(name, id);
+    var feed = await _service.FetchMailFeedAsync(name, id).ConfigureAwait(false);
 
-    var mail = feed.Items.First();
+    var mail = feed.Items.SingleOrDefault();
+
+    if (mail is null)
+      return null;
 
     return new UlmDslMail
     {
@@ -121,7 +131,7 @@ public class UlmDslClient
     if (string.IsNullOrWhiteSpace(name))
       throw new ArgumentException("Invalid name");
 
-    var feed = await _service.FetchInboxFeedAsync(name);
+    var feed = await _service.FetchInboxFeedAsync(name).ConfigureAwait(false);
 
     return feed.Items
       .Where(item => !string.IsNullOrWhiteSpace(item.Summary.Text))
