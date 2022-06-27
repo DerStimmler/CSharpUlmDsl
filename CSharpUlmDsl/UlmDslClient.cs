@@ -40,29 +40,42 @@ public class UlmDslClient
     if (string.IsNullOrWhiteSpace(name))
       throw new ArgumentException("Invalid name");
 
-    var mails = new List<UlmDslMail>();
-
     var mailInfos = await GetInboxAsync(name).ConfigureAwait(false);
+
+    var tasks = new List<Task<UlmDslMail>>();
+    var throttler = new SemaphoreSlim(50);
 
     foreach (var mailInfo in mailInfos)
     {
-      var feed = await _service.FetchMailFeedAsync(name, mailInfo.Id).ConfigureAwait(false);
+      await throttler.WaitAsync().ConfigureAwait(false);
 
-      var mail = feed.Items.First();
-
-      mails.Add(new UlmDslMail
+      tasks.Add(Task.Run(async () =>
       {
-        Id = Convert.ToInt32(mail.Id),
-        Link = mail.Links.First().Uri,
-        Subject = mail.Title.Text,
-        Date = mailInfo.Date,
-        Recipient = mailInfo.Recipient,
-        Sender = mailInfo.Sender,
-        Body = ExtractBodyFromContent(mail.Content)
-      });
+        try
+        {
+          var feed = await _service.FetchMailFeedAsync(name, mailInfo.Id).ConfigureAwait(false);
+
+          var mail = feed.Items.Single();
+
+          return new UlmDslMail
+          {
+            Id = Convert.ToInt32(mail.Id),
+            Link = mail.Links.First().Uri,
+            Subject = mail.Title.Text,
+            Date = mailInfo.Date,
+            Recipient = mailInfo.Recipient,
+            Sender = mailInfo.Sender,
+            Body = ExtractBodyFromContent(mail.Content)
+          };
+        }
+        finally
+        {
+          throttler.Release();
+        }
+      }));
     }
 
-    return mails.AsReadOnly();
+    return await Task.WhenAll(tasks.ToArray()).ConfigureAwait(false);
   }
 
   /// <summary>
