@@ -101,7 +101,7 @@ public class UlmDslClient
 
     var mailInfos = await GetInboxAsync(name).ConfigureAwait(false);
 
-    var mailInfo = mailInfos.SingleOrDefault(mail => mail.Id == id);
+    var mailInfo = mailInfos.FirstOrDefault(mail => mail.Id == id);
 
     if (mailInfo is null)
       return null;
@@ -200,7 +200,8 @@ public class UlmDslClient
   {
     var regex = new Regex("date => (?<Date>.+)\n");
     var match = regex.Match(summary);
+    var date = match.Groups["Date"].Value;
 
-    return DateTimeOffset.Parse(match.Groups["Date"].Value);
+    return DateTimeOffset.Parse(date);
   }
 }

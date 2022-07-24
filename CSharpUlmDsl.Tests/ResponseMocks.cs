@@ -154,7 +154,7 @@ udate => 1655740217
   </entry>
   </feed>";
 
-  public const string InvalidId4 = @"<?xml version='1.0' encoding='utf-8'?>
+  public const string InvalidId4Xml = @"<?xml version='1.0' encoding='utf-8'?>
 <feed xmlns=""http://www.w3.org/2005/Atom"">
   <author> <name>max.mustermann</name> </author>
   <title>Mail 4 an max.mustermann@ulm-dsl.de</title>
@@ -186,7 +186,7 @@ udate => 1655740217
     Body = @"<html><body>Testtext</body></html>"
   };
 
-  public static UlmDslMail SingleMail43056 = new()
+  public static UlmDslMail SingleMail4305 = new()
   {
     Id = 4305,
     Date = new DateTimeOffset(2022, 6, 20, 15, 50, 8, TimeSpan.Zero),
@@ -201,5 +201,5 @@ udate => 1655740217
     Body = @"Testtext2"
   };
 
-  public static List<UlmDslMailBasicInfo> Inbox = new() { SingleMail5267, SingleMail43056 };
+  public static List<UlmDslMailBasicInfo> Inbox = new() { SingleMail5267, SingleMail4305 };
 }

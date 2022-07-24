@@ -19,7 +19,7 @@ public class UlmDslClientTest
     mockHttp.When("https://ulm-dsl.de/mail-api.php?name=max.mustermann&id=4305")
       .Respond("text/xml", ResponseMocks.SingleMail4305Xml);
     mockHttp.When("https://ulm-dsl.de/mail-api.php?name=max.mustermann&id=4")
-      .Respond("text/xml", ResponseMocks.InvalidId4);
+      .Respond("text/xml", ResponseMocks.InvalidId4Xml);
 
     return new HttpClient(mockHttp);
   }
@@ -81,7 +81,7 @@ public class UlmDslClientTest
 
     mails.Count.Should().Be(2);
     mails.Should().Contain(ResponseMocks.SingleMail5267);
-    mails.Should().Contain(ResponseMocks.SingleMail43056);
+    mails.Should().Contain(ResponseMocks.SingleMail4305);
   }
 
   [Fact]
@@ -92,7 +92,7 @@ public class UlmDslClientTest
 
     mails.Count.Should().Be(2);
     mails.Should().Contain(ResponseMocks.SingleMail5267);
-    mails.Should().Contain(ResponseMocks.SingleMail43056);
+    mails.Should().Contain(ResponseMocks.SingleMail4305);
   }
 
   [Fact]
