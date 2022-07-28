@@ -116,3 +116,4 @@ inbox and then retrieve a single email by id.
 Here are some related projects:
 
 - [ts-ulm-dsl](https://github.com/DerStimmler/ts-ulm-dsl): Typescript version of this library
+- [ngx-ulm-dsl](https://github.com/DerStimmler/ngx-ulm-dsl): Angular wrapper for ts-ulm-dsl
