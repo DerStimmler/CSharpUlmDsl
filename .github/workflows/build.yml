@@ -25,18 +25,25 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --no-restore --verbosity normal --logger "trx;LogFileName=TestResults.xml" --results-directory dist/tests --collect:"XPlat Code Coverage"
+        run: dotnet test --no-restore --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory dist/tests --collect:"XPlat Code Coverage"
 
-      - name: Upload dotnet test results
+      - name: Upload dotnet Test Results
         uses: actions/upload-artifact@v3
         with:
           name: dotnet-test-results
-          path: dist/tests/TestResults.xml
+          path: dist/tests/test-results.trx
         if: ${{ always() }}
 
-      - name: Upload dotnet test coverage
+      - name: Upload dotnet Test Coverage
         uses: actions/upload-artifact@v3
         with:
           name: dotnet-test-coverage
           path: dist/tests/**/coverage.cobertura.xml
         if: ${{ always() }}
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
+        if: ${{ always() }}
+        with:
+          files: |
+            dist/tests/**/*.trx

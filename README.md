@@ -2,7 +2,7 @@
 [![dotnet](https://img.shields.io/badge/platform-.NET-blue)](https://www.nuget.org/packages/CSharpUlmDsl/)
 [![nuget version](https://img.shields.io/nuget/v/CSharpUlmDsl)](https://www.nuget.org/packages/CSharpUlmDsl/)
 [![nuget downloads](https://img.shields.io/nuget/dt/CSharpUlmDsl)](https://www.nuget.org/packages/CSharpUlmDsl/)
-![build](https://github.com/DerStimmler/CSharpUlmDsl/actions/workflows/main.yml/badge.svg)
+![build](https://github.com/DerStimmler/CSharpUlmDsl/actions/workflows/build.yml/badge.svg)
 [![GitHub license](https://img.shields.io/github/license/DerStimmler/CSharpUlmDsl)](https://github.com/DerStimmler/CSharpUlmDsl/blob/master/LICENSE.md)
 
 C# client for fetching emails from the temp mail service [ulm-dsl](https://ulm-dsl.de/).
