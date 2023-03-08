@@ -13,12 +13,12 @@ public record UlmDslMailBasicInfo
   /// <summary>
   ///   Subject of the email.
   /// </summary>
-  public string Subject { get; set; }
+  public string Subject { get; set; } = default!;
 
   /// <summary>
   ///   Uri to open mail in browser.
   /// </summary>
-  public Uri Link { get; set; }
+  public Uri Link { get; set; } = default!;
 
   /// <summary>
   ///   Information about the recipient of the email.
