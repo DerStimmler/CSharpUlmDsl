@@ -1,5 +1,8 @@
 namespace CSharpUlmDsl.Models;
 
+/// <summary>
+///   Contains basic information about ulm-dsl mail
+/// </summary>
 public record UlmDslMailBasicInfo
 {
   /// <summary>
