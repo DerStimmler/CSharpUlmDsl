@@ -1,0 +1,42 @@
+name: "Main"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    name: CI Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal --logger "trx;LogFileName=TestResults.xml" --results-directory dist/tests --collect:"XPlat Code Coverage"
+
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: dotnet-test-results
+          path: dist/tests/TestResults.xml
+        if: ${{ always() }}
+
+      - name: Upload dotnet test coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: dotnet-test-coverage
+          path: dist/tests/**/coverage.cobertura.xml
+        if: ${{ always() }}
