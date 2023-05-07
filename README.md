@@ -1,4 +1,5 @@
 # CSharpUlmDsl
+
 [![dotnet](https://img.shields.io/badge/platform-.NET-blue)](https://www.nuget.org/packages/CSharpUlmDsl/)
 [![nuget version](https://img.shields.io/nuget/v/CSharpUlmDsl)](https://www.nuget.org/packages/CSharpUlmDsl/)
 [![nuget downloads](https://img.shields.io/nuget/dt/CSharpUlmDsl)](https://www.nuget.org/packages/CSharpUlmDsl/)
@@ -25,6 +26,8 @@ PM> Install-Package CSharpUlmDsl
 
 The following examples use the email address `max.mustermann@ulm-dsl.de`. Just replace the inbox name `max.mustermann`
 to match your address.
+
+Note that you have to fetch your inbox once before you can receive emails at your address. Your address stays active for 14 days. This period renews for every request.
 
 ### Initialization
 
