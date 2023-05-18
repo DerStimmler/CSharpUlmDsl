@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
@@ -20,6 +21,8 @@ public class UlmDslClientTest
       .Respond("text/xml", ResponseMocks.SingleMail4305Xml);
     mockHttp.When("https://ulm-dsl.de/mail-api.php?name=max.mustermann&id=4")
       .Respond("text/xml", ResponseMocks.InvalidId4Xml);
+    mockHttp.When("https://ulm-dsl.de/mail-api.php?name=server-error")
+      .Respond(_ => new HttpResponseMessage(HttpStatusCode.InternalServerError));
 
     return new HttpClient(mockHttp);
   }
@@ -115,5 +118,14 @@ public class UlmDslClientTest
     await result2.Should().ThrowAsync<ArgumentException>();
     var result3 = async () => { await client.GetMailsAsync(string.Empty); };
     await result3.Should().ThrowAsync<ArgumentException>();
+  }
+
+  [Fact]
+  public async void ServerError()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+
+    var result = async () => { await client.GetInboxAsync("server-error"); };
+    await result.Should().ThrowAsync<InvalidOperationException>();
   }
 }
