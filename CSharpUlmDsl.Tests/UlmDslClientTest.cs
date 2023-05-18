@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using CSharpUlmDsl.Models;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using Xunit;
@@ -28,22 +30,25 @@ public class UlmDslClientTest
   }
 
   [Fact]
-  public async void GetInboxAsync()
-  {
-    var client = new UlmDslClient(GetMockedHttpClient());
-    var inbox = await client.GetInboxAsync("max.mustermann");
-
-    inbox.Should().HaveCount(2);
-
-    inbox.Should().BeEquivalentTo(ResponseMocks.Inbox);
-  }
-
-  [Fact]
   public void GetInbox()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
     var inbox = client.GetInbox("max.mustermann");
 
+    GetInboxAssertions(inbox);
+  }
+
+  [Fact]
+  public async void GetInboxAsync()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+    var inbox = await client.GetInboxAsync("max.mustermann");
+
+    GetInboxAssertions(inbox);
+  }
+
+  private static void GetInboxAssertions(IReadOnlyList<UlmDslMailBasicInfo> inbox)
+  {
     inbox.Should().HaveCount(2);
 
     inbox.Should().BeEquivalentTo(ResponseMocks.Inbox);
@@ -59,32 +64,26 @@ public class UlmDslClientTest
   }
 
   [Fact]
-  public async void GetMailByIdAsync()
-  {
-    var client = new UlmDslClient(GetMockedHttpClient());
-    var mail = await client.GetMailByIdAsync("max.mustermann", 5267);
-
-    mail.Should().Be(ResponseMocks.SingleMail5267);
-  }
-
-  [Fact]
   public void GetMailById()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
     var mail = client.GetMailById("max.mustermann", 5267);
 
-    mail.Should().Be(ResponseMocks.SingleMail5267);
+    GetMailByIdAssertions(mail);
   }
 
   [Fact]
-  public async void GetMailsAsync()
+  public async void GetMailByIdAsync()
   {
     var client = new UlmDslClient(GetMockedHttpClient());
-    var mails = await client.GetMailsAsync("max.mustermann");
+    var mail = await client.GetMailByIdAsync("max.mustermann", 5267);
 
-    mails.Count.Should().Be(2);
-    mails.Should().Contain(ResponseMocks.SingleMail5267);
-    mails.Should().Contain(ResponseMocks.SingleMail4305);
+    GetMailByIdAssertions(mail);
+  }
+
+  private static void GetMailByIdAssertions(UlmDslMail? mail)
+  {
+    mail.Should().Be(ResponseMocks.SingleMail5267);
   }
 
   [Fact]
@@ -93,6 +92,20 @@ public class UlmDslClientTest
     var client = new UlmDslClient(GetMockedHttpClient());
     var mails = client.GetMails("max.mustermann");
 
+    GetMailsAssertions(mails);
+  }
+
+  [Fact]
+  public async void GetMailsAsync()
+  {
+    var client = new UlmDslClient(GetMockedHttpClient());
+    var mails = await client.GetMailsAsync("max.mustermann");
+
+    GetMailsAssertions(mails);
+  }
+
+  private static void GetMailsAssertions(IReadOnlyList<UlmDslMail> mails)
+  {
     mails.Count.Should().Be(2);
     mails.Should().Contain(ResponseMocks.SingleMail5267);
     mails.Should().Contain(ResponseMocks.SingleMail4305);
