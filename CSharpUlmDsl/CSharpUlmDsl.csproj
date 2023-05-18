@@ -8,13 +8,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>CSharpUlmDsl</Title>
     <Authors>Stimmler</Authors>
-    <Description>C# client for fetching emails from the temp mail service ulm-dsl.</Description>
-    <Copyright>Copyright (c) Stimmler 2022</Copyright>
+    <Description>C# client for fetching emails from the temp mail service ulm-dsl</Description>
+    <Copyright>Copyright (c) Stimmler 2023</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/DerStimmler/CSharpUlmDsl</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/DerStimmler/CSharpUlmDsl</RepositoryUrl>
-    <PackageTags>C#, TempMail, UlmDsl</PackageTags>
+    <PackageTags>C#, dotnet, mail, temp, tempmail, csharp, nuget, package, library, client, api, free, UlmDsl, MIT</PackageTags>
     <Company>Stimmler</Company>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageVersion>1.0.4</PackageVersion>
